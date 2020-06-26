@@ -13,12 +13,18 @@
  }
  
   // Acciones del metodo GET
- if(isset($_GET['accion'])){
-     
-     if($_GET['accion'] == 'EliminarSesion'){
-         eliminarSesion();
-         header('location:index.php');
-     }     
+ if(isset($_GET['accion'])){  
+     switch ($_GET['accion'])
+     {
+         case 'Eliminar':
+                eliminarUsuario();
+                header('location:index.php');
+                break;
+         case 'EliminarSesion':    
+                eliminarSesion();
+                header('location:index.php');
+                break;
+     }  
  }
  
      
@@ -47,7 +53,15 @@
      array_push($lista,$usuario);
      $_SESSION['listaUsuarios'] = $lista;     
  }
-     
+ 
+ function eliminarUsuario(){
+     $posicion = $_GET['posicion'];
+     $lista = obtenerListaUsuarios();
+     unset($lista[$posicion]);
+     $_SESSION['listaUsuarios'] = $lista;
+ }
+
+
  function eliminarSesion(){
      unset($_SESSION['listaUsuarios']);
      session_unset();
